@@ -2,7 +2,7 @@
 
 REM - WuInstall Continuous Updates Until Completion
 REM - 
-REM - Copyright 2012 Dusty Wilson <myfirstname at linux.com>
+REM - Copyright 2012 Dusty Wilson myfirstname at linux dot com
 REM - License GPLv3
 REM - 
 REM - This script combined with WuInstall Freeware (wuinstall.com)
@@ -23,7 +23,7 @@ if "%1." == "." goto fail
 \\domainname\path\blah\pstools\psexec \\%1 -c -v -s -u domainname\username -p password \\domainname\path\blah\wuinstall\wuinstall.exe /install
 
 REM 53= psexec unable to connect (probably still rebooting)
-if errorlevel 53 goto rerun
+if errorlevel 53 goto rerunwithdelay
 
 REM 12= timeout occurred
 if errorlevel 12 goto end
@@ -73,7 +73,7 @@ ping 1.1.1.1 -n 1 -w 120000 >nul
 goto rerun
 
 :rerun
-call %0 %*
+%0 %*
 goto end
 
 :fail
