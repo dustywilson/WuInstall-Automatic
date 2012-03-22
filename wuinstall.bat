@@ -2,7 +2,7 @@
 
 REM - WuInstall Continuous Updates Until Completion
 REM - 
-REM - Copyright 2012 Dusty Wilson myfirstname at linux dot com
+REM - Copyright 2012 Dusty Wilson <myfirstname at linux.com>
 REM - License GPLv3
 REM - 
 REM - This script combined with WuInstall Freeware (wuinstall.com)
@@ -17,10 +17,14 @@ REM - stop running each reboot.
 REM - 
 REM - Please report bugs and patches are welcomed.  This has ONLY
 REM - been tested in a domain environment with WSUS on the LAN.
+REM -
+REM - SOFTWARE DEPENDENCIES:
+REM - WuInstall Freeware or Pro: http://wuinstall.com/
+REM - PsExec: http://technet.microsoft.com/en-us/sysinternals/bb897553
 
 if "%1." == "." goto fail
 
-\\domainname\path\blah\pstools\psexec \\%1 -c -v -s -u domainname\username -p password \\domainname\path\blah\wuinstall\wuinstall.exe /install
+\\servername\path\blah\pstools\psexec \\%1 -c -v -s -u domainname\username -p password \\servername\path\blah\wuinstall\wuinstall.exe /install
 
 REM 53= psexec unable to connect (probably still rebooting)
 if errorlevel 53 goto rerunwithdelay
@@ -41,7 +45,7 @@ REM 7= syntax error
 if errorlevel 7 goto end
 
 REM 6= reboot wanted but failed
-if errorlevel 6 goto rebootandcontinue
+if errorlevel 6 goto rebootandrerun
 
 REM 5= reboot started
 if errorlevel 5 goto rerunwithdelay
